@@ -1,0 +1,57 @@
+Firmware Personalizado - La prueba de concepto por Dark_AleX
+
+Ha habido ultimamente discusion sobre si los firmwares personalizados son posibles en la psp.
+(Nota: personalizados en el sentido de escribir nuestro propio codigo ejecutable en el sistema,
+y no solo datos como fuentes, videos,...
+
+Incluso bastantes desarroladores dudan de que esto sea posible debido a las protecciones en la psp.
+Bueno, pues aqui estoy para demostrar lo contrario :P
+
+Instrucciones:
+(Nota: esto solo funciona para 1.50)
+
+- Copia la carpeta PSP a la raiz de tu memstick.
+- Ejecuta el programa "Custom Firmware - The proof of concept"
+  Escribira a la flash algunos archivos ejecutables.
+
+Y listo.
+
+Este programa ha sido probado en mi psp. Sin embargo, como todos los programas que escriben a
+la flash, existe siempre un riesgo de romper la psp. Usalo a tu cuenta y riesgo. 
+IMPORTANTE (para evitar confusiones): el programa incluye un archivo llamado vshmain.prx. 
+Esto archivo NO es de Sony, es uno mio, las fuentes de todo están disponibles.
+
+Las caracteristicas de este Firmware Personalizado - La prueba de concepto son:
+
+- Ejecucuin de pbp's normales (1.00, no-kxploited)
+- Posibilidad de ocultar iconos corruptos. (nota: por defecto no esta habilitado, mira el archivo 
+/PSP/SYSTEM/config.txt para ver como habilitarlo.)
+- Posibilidad de saltarse el logo de SCE al principio. (y de esta manera evitar la molesta 
+auto-ejecución del UMD). Como la anterior, tampoco esta habilitada por defecto.
+- "Modo de recuperacion:". Si mantienes R presionado mientras enciendes la psp, 
+entrara en el "modo de recuperacion".
+El modo de recuperación no es mas que una simple aplicación que te permite usar el usb, y ejecutar
+un programa en la ruta ms0:/PSP/GAME/UPDATE/EBOOT.PBP, que podria ser, por ejemplo, un actualizador
+de Sony o el downdater de 1.50 -> 1.00.
+
+Esto permitiria recuperar pisapapeles potenciales causados por la escritura de fuentes/videos/sonidos... invalidos a
+la flash.
+(Ten en cuenta que esto no permitiria recuperar cosas mas graves como el borrado de prx's criticas del sistema)
+
+- Autoejecucion de un programa al inicio. Mira el archivo de configuracion en /PSP/SYSTEM/config.txt
+  para ver como usarlo.
+
+
+Detalles tecnicos para programadores - Por que y como funciona esto.
+
+Considera a vshmain.prx como el ejecutable del firmware. 
+Deberias saber que tanto en 1.00 como en 1.50, NO PODEMOS ejecutar nuestras propias prx's.
+Sin embargo, deberias saber que si que podemos ejecutar nuestros propios elf's :)
+
+Simplemente creando un elf, renombrandolo a vshmain.prx y flashearlo funciona :)
+
+Sin embargo, ten en cuenta una COSA MUY IMPORTANTE. Por defecto, los elf's estaticos creados
+por el pspsdk estan enlazados a la direccion 0x08900000. Esta direccion esta previamente tomada
+por uno de los prx's que se cargan antes de vshmain.
+Es necesario enlazar el elf a una direccion diferente no usada.
+Esta prueba de concepto usa la direccion 0x09CD3000.
